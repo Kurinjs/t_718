@@ -19,7 +19,7 @@ namespace DBManS
         private static Logger log = LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
-            log.Trace("Start of work(make objects for work, processing of request)");
+            log.Trace("Start of the work(making objects for work, processing of request)");
         //работаем с аргументами в интерпретаторе
         var context = new Context(args);
             var list = new List<AbstractExpression>();
@@ -50,7 +50,7 @@ namespace DBManS
             try
             {
                 if (ListCommand.ContainsKey(ob1.TerInfo) == false) throw new Exception("This command doesn't exist!");
-                log.Trace("The key found, receiving the object");
+                log.Trace("The key is found, receiving the object");
                 set.SetCommand(ListCommand[ob1.TerInfo]);
             }
             catch (Exception e)
