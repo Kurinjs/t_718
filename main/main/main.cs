@@ -37,7 +37,7 @@ namespace DBManS
             FuncSelect select = new FuncSelect();
             Update Upd = new Update();
             Delete Del = new Delete();
-            Request req = new Request();
+            RequestInfo req = new RequestInfo();
             Dictionary<string, ICommand> ListCommand = new Dictionary<string, ICommand>();//make collection
             ListCommand.Add("helpme", new OutInfo());
             ListCommand.Add("CreateDB", new FuncCreateDBCommand(createDB, ob2));//distribution him in collection and add key for him
@@ -45,11 +45,24 @@ namespace DBManS
             ListCommand.Add("Select", new FuncSelectCommand(select, ob2));
             ListCommand.Add("Update", new UpdateCommand(Upd, ob2));
             ListCommand.Add("Delete", new DeleteCommand(Del, ob2));
-            ListCommand.Add("RequestInfo", new RequestCommand(req));
+            ListCommand.Add("RequestInfo", new RequestInfoCommand(req));
             Set set = new Set();
-            set.SetCommand(ListCommand[ob1.TerInfo]);
+            try
+            {
+                if (ListCommand.ContainsKey(ob1.TerInfo) == false) throw new Exception("This command doesn't exist!");
+                log.Trace("The key found, receiving the object");
+                set.SetCommand(ListCommand[ob1.TerInfo]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message+"\nUse command \"helpme\"");
+                log.Trace("This command doesn't exist!Send message of expression and closure of the programme");
+                return;
+            }
             set.Processing();
+            log.Trace("Call clean-up function");
             ClearExcel.Clear_all();
+            log.Trace("Good job! Closure of the application");
             Console.ReadKey();
         }
     }
