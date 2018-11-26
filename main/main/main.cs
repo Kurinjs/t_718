@@ -9,16 +9,19 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using NLog;
 using DBManS;
 
 namespace DBManS
 {
     class MainClass
     {
+        private static Logger log = LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
-            //работаем с аргументами в интерпретаторе
-            var context = new Context(args);
+            log.Trace("Start of work(make objects for work, processing of request)");
+        //работаем с аргументами в интерпретаторе
+        var context = new Context(args);
             var list = new List<AbstractExpression>();
             TerminalExpression ob1 = new TerminalExpression();
             NonterminalExpression ob2 = new NonterminalExpression();
