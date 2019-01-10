@@ -21,7 +21,7 @@ namespace WntifDB
         private static Logger logger = LogManager.GetCurrentClassLogger();
         static void Main(string[] args)
         {
-
+            Console.ForegroundColor = ConsoleColor.Gray;
             logger.Trace("Старт приложения, проверка на наличие аргументов");
             try
             {
@@ -110,12 +110,14 @@ namespace WntifDB
                                 Regex reg = new Regex("[CREATE] (DBase|Table) '[A-z||0-9]{1,15}'", RegexOptions.IgnoreCase);
                                 if (reg.IsMatch(InputCommand) == true)
                                 {
-                                    Console.WriteLine("ZBS");
+                                    Console.WriteLine("");
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Denied access!");
+                                Console.ForegroundColor = ConsoleColor.Gray;
                             }
 
                         }
