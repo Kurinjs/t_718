@@ -15,9 +15,9 @@ namespace WntifDB
     class Authorization
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        string Access;
+        public string Access;
         string Password;
-        string Name;
+        public string Name;
         public Authorization(string login, string password)
         {
             Access = "User";
