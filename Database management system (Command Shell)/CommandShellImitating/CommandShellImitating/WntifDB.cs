@@ -103,15 +103,16 @@ namespace WntifDB
                             }
                         }
                         break;
-                    case "CREATE":
+                    case "StartJob":
                         {
                             if (AutoUser.Access == "Admin")
                             {
-                                Regex reg = new Regex("[CREATE] (DBase|Table) '[A-z||0-9]{1,15}'", RegexOptions.IgnoreCase);
-                                if (reg.IsMatch(InputCommand) == true)
-                                {
-                                    Console.WriteLine("");
-                                }
+                                interpret ob=new interpret(AutoUser);
+                                //Regex reg = new Regex("[CREATE] (DBase|Table) '[A-z||0-9]{1,15}'", RegexOptions.IgnoreCase);
+                                //if (reg.IsMatch(InputCommand) == true)
+                                //{
+                                //    Console.WriteLine("");
+                                //}
                             }
                             else
                             {
