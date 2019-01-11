@@ -105,9 +105,17 @@ namespace WntifDB
                         break;
                     case "StartJob":
                         {
-                            if (AutoUser.Access == "Admin")
+                            if (CheckAccessUser(AutoUser))
                             {
                                 interpret ob=new interpret(AutoUser);
+                                while(ob.command != "back")
+                                {
+                                    ///
+                                    ///тут будет словать или свич
+                                    ///
+
+                                    ob = new interpret(AutoUser);
+                                }
                                 //Regex reg = new Regex("[CREATE] (DBase|Table) '[A-z||0-9]{1,15}'", RegexOptions.IgnoreCase);
                                 //if (reg.IsMatch(InputCommand) == true)
                                 //{
@@ -133,6 +141,19 @@ namespace WntifDB
             }
 
         }
-
+        static public bool CheckAccessAdmin(Authorization user)
+        {
+            if (user.Access == "Admin")
+                return true;
+            else
+                return false;
+        }
+        static public bool CheckAccessUser(Authorization user)
+        {
+            if (user.Access == "Admin"|| user.Access == "User")
+                return true;
+            else
+                return false;
+        }
     }
 }

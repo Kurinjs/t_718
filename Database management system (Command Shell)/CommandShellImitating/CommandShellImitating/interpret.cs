@@ -8,6 +8,7 @@ namespace WntifDB
 {
     class interpret
     {
+        List<string> ListMainWords=new List<string>();
         Authorization AutoUser;
         public string command = null;
         string where = null;
@@ -15,7 +16,20 @@ namespace WntifDB
         public interpret(Authorization AutoUser)
         {
             this.AutoUser = AutoUser;
+            bootList();
             command = ReadRequest();
+        }
+        private void bootList()
+        {
+            ListMainWords.Add("CREATE");
+            ListMainWords.Add("TABLE");
+            ListMainWords.Add("DATABASE");
+            ListMainWords.Add("SELECT");
+            ListMainWords.Add("UPDATE");
+            ListMainWords.Add("DELETE");
+            ListMainWords.Add("INNER");
+            ListMainWords.Add("FROM");
+            ListMainWords.Add("WHERE");
         }
         private string ReadRequest()
         {
@@ -36,7 +50,7 @@ namespace WntifDB
                         temp = TempSTR;
                     else
                      temp = TempSTR.Substring(TempSTR.LastIndexOf(" ")+1);
-                    if (temp == "CREATE")
+                    if (ListMainWords.Contains(temp))
                     {
                         OutCommandWord(temp);
                         temp = "";
@@ -44,8 +58,10 @@ namespace WntifDB
                 }
                 if (keyinfo.Key != ConsoleKey.Backspace)
                 {
-                    Console.Write(keyinfo.KeyChar);
-                    TempSTR += keyinfo.KeyChar;
+                    
+                    Console.Write(Char.ToUpper(keyinfo.KeyChar));
+                 
+                        TempSTR += Char.ToUpper(keyinfo.KeyChar);
                 }
                 else if (keyinfo.Key == ConsoleKey.Backspace)
                 {
