@@ -105,16 +105,79 @@ namespace WntifDB
                         break;
                     case "StartJob":
                         {
+
                             if (CheckAccessUser(AutoUser))
                             {
-                                interpret ob=new interpret(AutoUser);
-                                while(ob.command != "back")
+                                string tempStr = "";
+                               
+                                interpret ob = new interpret(AutoUser);
+                                string first_word = ob.command.Remove(ob.command.IndexOf(" "));
+                               // Console.WriteLine("fw" + first_word);//
+                                while (first_word != "back")
                                 {
-                                    ///
-                                    ///тут будет словать или свич
-                                    ///
 
+                                    switch (first_word)
+                                    {
+                                        case "IN":
+                                            {
+                                                try
+                                                {
+
+                                                    Regex reg = new Regex("IN [A-z]");
+                                                    if (!reg.IsMatch(ob.command))
+                                                    {
+                                                        throw new Exception("Incorrect syntax\nExample: IN NameDatabase");
+                                                    }
+                                                    AutoUser.NameDB = ob.command.Substring(ob.command.IndexOf(" "));
+                                                    if (!File.Exists(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + "\\" + AutoUser.NameDB + ".xml"))
+                                                    {
+                                                        AutoUser.NameDB = null;
+                                                        throw new Exception("Database is not exist");
+                                                    }
+                                                }
+                                                catch (Exception e)
+                                                {
+                                                    Console.WriteLine(e.Message);
+                                                }
+                                            }
+                                            break;
+                                        case "EXIT":
+                                            {
+                                                AutoUser.NameDB = null;
+                                            }
+                                            break;
+                                        case "CREATE":
+                                            {
+                                                try
+                                                {
+                                                    if (ob.command.IndexOf("CREATE TABLE") != -1)
+                                                    {
+                                                        if (AutoUser.NameDB == null)
+                                                            throw new Exception("Sign in Database! Use command 'IN NameDatabase'");
+                                                        Create.Table table = new Create.Table(ob.command, AutoUser.NameDB);
+                                                        table.Create();
+                                                    }
+                                                    else
+                                                    if (ob.command.IndexOf("CREATE DATABASE") != -1)
+                                                    {
+                                                        Create.Database db = new Create.Database(ob.command);
+                                                        db.Create();
+                                                    }
+                                                }
+                                                catch (Exception e)
+                                                {
+
+                                                    logger.Trace(e.Message);
+                                                }
+
+                                                ///
+                                                ///тут будет словать или свич
+                                                ///
+                                            }
+                                            break;
+                                    }
                                     ob = new interpret(AutoUser);
+                                    first_word = ob.command.Remove(ob.command.IndexOf(" "));
                                 }
                                 //Regex reg = new Regex("[CREATE] (DBase|Table) '[A-z||0-9]{1,15}'", RegexOptions.IgnoreCase);
                                 //if (reg.IsMatch(InputCommand) == true)

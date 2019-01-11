@@ -30,6 +30,8 @@ namespace WntifDB
             ListMainWords.Add("INNER");
             ListMainWords.Add("FROM");
             ListMainWords.Add("WHERE");
+            ListMainWords.Add("IN");
+            ListMainWords.Add("EXIT");
         }
         private string ReadRequest()
         {
@@ -38,7 +40,10 @@ namespace WntifDB
             if (AutoUser.Name != null)
             {
                 Console.Write(AutoUser.Name + ">Job>");
+                if (AutoUser.NameDB != null)
+                    Console.Write(AutoUser.NameDB + ">");
             }
+            
             string TempSTR = "";
             ConsoleKeyInfo keyinfo = Console.ReadKey(true);
             while (keyinfo.Key != ConsoleKey.Enter)

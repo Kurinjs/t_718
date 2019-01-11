@@ -18,6 +18,7 @@ namespace WntifDB
         public string Access;
         string Password;
         public string Name;
+        public string NameDB = null;
         public Authorization(string login, string password)
         {
             Access = "User";
